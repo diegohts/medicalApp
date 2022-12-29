@@ -3,6 +3,8 @@ package med.voll.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,8 +31,11 @@ public class MedicoController {
 	}
 
 	@GetMapping
-	public List<DadosListagemMedico> listar() {
-		// Dessa forma converto uma lista de Medico para uma lista DadosListagemMedico
-		return repository.findAll().stream().map(DadosListagemMedico::new).toList();
+	public Page<DadosListagemMedico> listar(Pageable paginacao) {
+		/* Paginacao e o controle é realizado na chamada na url, sendo http://localhost:8080/medicos?size=1&page=2
+		Detalhe a primeira página é representada por page=0
+		Esses 2 parametros são usados para controlar a paginacao, size quantos registros quero carregar
+		e o page qual pagina carrego os registros*/
+		return repository.findAll(paginacao).map(DadosListagemMedico::new);
 	}
 }
