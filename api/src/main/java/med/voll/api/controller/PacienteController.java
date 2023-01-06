@@ -26,4 +26,11 @@ public class PacienteController {
 
 		return repository.findAllByAtivoTrue(paginacao).map(DadosListagemPaciente::new);
 	}
+
+	@PutMapping
+	@Transactional
+	public void atualizar(@RequestBody @Valid DadosAtualizacaoPaciente dados) {
+		var medico = repository.getReferenceById(dados.id());
+		medico.atualizarInformacoes(dados);
+	}
 }
