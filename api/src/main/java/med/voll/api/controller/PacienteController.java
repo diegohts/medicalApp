@@ -23,7 +23,7 @@ public class PacienteController {
 		var paciente = new Paciente(dados);
 		repository.save(paciente);
 
-		var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(paciente.getId()).toUri();
+		var uri = uriBuilder.path("/pacientes/{id}").buildAndExpand(paciente.getId()).toUri();
 		return ResponseEntity.created(uri).body(new DadosDetalhamentoPaciente(paciente));
 	}
 
@@ -49,5 +49,12 @@ public class PacienteController {
 		paciente.excluir();
 
 		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity detalhar(@PathVariable Long id) {
+		var paciente = repository.getReferenceById(id);
+
+		return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
 	}
 }
