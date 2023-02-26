@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import jakarta.persistence.EntityNotFoundException;
+import med.voll.api.domain.ValidacaoException;
 
 @RestControllerAdvice
 public class TratadorDeErros {
@@ -20,6 +21,12 @@ public class TratadorDeErros {
 		var erros = ex.getFieldErrors();
 
 		return ResponseEntity.badRequest().body(erros.stream().map(DadosErroValidacao::new).toList());
+	}
+
+	@ExceptionHandler(ValidacaoException.class)
+	public ResponseEntity tratarErroRegraDeNegocio400(ValidacaoException ex) {
+
+		return ResponseEntity.badRequest().body(ex.getMessage());
 	}
 
 	private record DadosErroValidacao(String campo, String mensagem) {
