@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("consultas")
 public class ConsultaController {
 
-    // Peco para o spring injetar essa classe atraves do autowired
 	@Autowired
 	private AgendaDeConsultas agenda;
 

@@ -4,9 +4,9 @@ import med.voll.api.domain.medico.MedicoRepository;
 import med.voll.api.domain.paciente.PacienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import med.voll.api.domain.ValidacaoException;
+import med.voll.api.domain.medico.Medico;
 
-//Representa um servico, que serve para agendar consultas e consegue carregar posteriormente
-// Classe Service executa as regras de negocio e validacoes da aplicacao
 @Service
 public class AgendaDeConsultas {
 
@@ -20,10 +20,33 @@ public class AgendaDeConsultas {
 	private PacienteRepository pacienteRepository;
 
 	public void agendar(DadosAgendamentoConsulta dados) {
-		var paciente = pacienteRepository.findById(dados.idPaciente()).get();
-		var medico = medicoRepository.findById(dados.idMedico()).get();
+
+		if (!pacienteRepository.existsById(dados.idPaciente())) {
+			throw new ValidacaoException("ID do paciente informado não existe!");
+		}
+
+        // A escolha do medico eh opcional, sendo que nesse caso o sistema deve escolher aleatoriamente algum medico disponivel
+		if (dados.idMedico() != null && !medicoRepository.existsById(dados.idMedico())) {
+			throw new ValidacaoException("ID do médico informado não existe!");
+		}
+//Podemos trocar o findById() pelo getReferenceById() também na variável medico, pois não queremos carregar o objeto para manipula-lo,
+//mas só para atribui-lo a outro objeto. E não precisamos chamar o .get() que usamos anteriormente.
+		var paciente = pacienteRepository.getReferenceById(dados.idPaciente());
+		var medico = escolherMedico(dados);
+
 		var consulta = new Consulta(null, medico, paciente, dados.data());
 		consultaRepository.save(consulta);
 	}
+// escolher o medico aleatorio de uma determinada especialidade especifica
+	private Medico escolherMedico(DadosAgendamentoConsulta dados) {
+		if (dados.idMedico() != null) {
+			return medicoRepository.getReferenceById(dados.idMedico());
+		}
 
+		if (dados.especialidade() == null) {
+			throw new ValidacaoException("Especialidade é obrigatória quando médico não for escolhido!");
+		}
+
+		return medicoRepository.escolherMedicoAleatorioLivreNaData(dados.especialidade(), dados.data());
+	}
 }
