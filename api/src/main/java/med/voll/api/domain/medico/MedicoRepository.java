@@ -10,9 +10,6 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
 
 	Page<Medico> findAllByAtivoTrue(Pageable paginacao);
 
-	// como o metodo abaixo escreveu em portugues, nao esta seguindo o padrao de nomenclatura em ingles. Entao vamos digital a consulta SQL
-	// A consulta abaixo e para trazer um medico de maneira randomica cujo sejam ativos de uma determinada especialidade.
-	// E que o id não seja de um medico que tenha consulta em uma determinada data marcada
 	@Query("""
 		select m from Medico m
 		where
@@ -29,4 +26,12 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
 		limit 1
 		""")
 	Medico escolherMedicoAleatorioLivreNaData(Especialidade especialidade, LocalDateTime data);
+
+	@Query("""
+		select m.ativo
+		from Medico m
+		where
+		m.id = :id
+		""")
+	Boolean findAtivoById(Long idMedico);
 }

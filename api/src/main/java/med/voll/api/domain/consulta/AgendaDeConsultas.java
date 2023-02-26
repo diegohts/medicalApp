@@ -25,19 +25,17 @@ public class AgendaDeConsultas {
 			throw new ValidacaoException("ID do paciente informado não existe!");
 		}
 
-        // A escolha do medico eh opcional, sendo que nesse caso o sistema deve escolher aleatoriamente algum medico disponivel
 		if (dados.idMedico() != null && !medicoRepository.existsById(dados.idMedico())) {
 			throw new ValidacaoException("ID do médico informado não existe!");
 		}
-//Podemos trocar o findById() pelo getReferenceById() também na variável medico, pois não queremos carregar o objeto para manipula-lo,
-//mas só para atribui-lo a outro objeto. E não precisamos chamar o .get() que usamos anteriormente.
+
 		var paciente = pacienteRepository.getReferenceById(dados.idPaciente());
 		var medico = escolherMedico(dados);
 
 		var consulta = new Consulta(null, medico, paciente, dados.data());
 		consultaRepository.save(consulta);
 	}
-// escolher o medico aleatorio de uma determinada especialidade especifica
+
 	private Medico escolherMedico(DadosAgendamentoConsulta dados) {
 		if (dados.idMedico() != null) {
 			return medicoRepository.getReferenceById(dados.idMedico());

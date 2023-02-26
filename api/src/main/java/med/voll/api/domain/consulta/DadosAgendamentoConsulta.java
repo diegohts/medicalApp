@@ -12,7 +12,7 @@ public record DadosAgendamentoConsulta(
 	Long idPaciente,
 
 	@NotNull
-	@Future //Data do futuro, dados do momento daqui pra frente
+	@Future
 	LocalDateTime data,
 	Especialidade especialidade) {
 }
