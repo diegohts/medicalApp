@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-@Component // Um componente generico
+@Component
 public class ValidadorHorarioAntecedencia implements ValidadorAgendamentoDeConsulta {
 
 	public void validar(DadosAgendamentoConsulta dados) {

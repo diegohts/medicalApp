@@ -34,9 +34,6 @@ public class AgendaDeConsultas {
 			throw new ValidacaoException("ID do médico informado não existe!");
 		}
 
-        // Sao varias classes que tem o mesmo metodo em comum que se chama validar, um cenario de interface
-        //e a assinatura é similar para todas as classes que usam o metodo.
-        //Porem cada um, tem um tratamento e implementacao diferente
 		validadores.forEach(v -> v.validar(dados));
 
 		var paciente = pacienteRepository.getReferenceById(dados.idPaciente());
