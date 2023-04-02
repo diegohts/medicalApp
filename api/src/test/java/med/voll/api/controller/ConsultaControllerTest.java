@@ -59,6 +59,7 @@ class ConsultaControllerTest {
 		var especialidade = Especialidade.CARDIOLOGIA;
 
 		var dadosDetalhamento = new DadosDetalhamentoConsulta(null, 2l, 5l, data);
+        //mockito quando minha agendaDeConsultas que é o mock, tiver um metodo agendar e não importa os parametros devolva os dados de dadosDetalhamento
 		when(agendaDeConsultas.agendar(any())).thenReturn(dadosDetalhamento);
 
 		var response = mvc
