@@ -16,9 +16,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DATASOURCE_URL: jdbc:mysql://db/vollmed_api
+      DATASOURCE_URL: jdbc:mysql://root:78MSEpYtjrcehl9ksxvY@containers-us-west-187.railway.app:6866/railway
       DATASOURCE_USERNAME: root
-      DATASOURCE_PASSWORD: banco123
+      DATASOURCE_PASSWORD: 78MSEpYtjrcehl9ksxvY
       SPRING_PROFILES_ACTIVE: prod
     depends_on:
       - db
