@@ -13,7 +13,7 @@ import jakarta.validation.Valid;
 import med.voll.api.domain.paciente.*;
 
 @RestController
-@RequestMapping("pacientes")
+@RequestMapping("api/v1/pacientes")
 @SecurityRequirement(name = "bearer-key")
 public class PacienteController {
 
@@ -31,7 +31,8 @@ public class PacienteController {
 	}
 
 	@GetMapping
-	public ResponseEntity<Page<DadosListagemPaciente>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
+	public ResponseEntity<Page<DadosListagemPaciente>> listar(
+			@PageableDefault(size = 10, sort = { "nome" }) Pageable paginacao) {
 		var page = repository.findAllByAtivoTrue(paginacao).map(DadosListagemPaciente::new);
 		return ResponseEntity.ok(page);
 	}

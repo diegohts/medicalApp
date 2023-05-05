@@ -2,20 +2,22 @@ package med.voll.api.domain.usuario;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import med.voll.api.domain.pessoa.DadosAtualizacaoPessoa;
+import med.voll.api.domain.pessoa.Pessoa;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 @Table(name = "usuarios")
 @Entity(name = "Usuario")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -26,6 +28,10 @@ public class Usuario implements UserDetails {
 
 	private String login;
 	private String senha;
+
+	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
+	private Pessoa pessoa;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,5 +66,14 @@ public class Usuario implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public void atualizarDados(DadosAtualizacaoPessoa dados) {
+		if(dados.login() != null){
+			this.login = dados.login();
+		}
+		if(dados.senha() != null){
+			this.senha = dados.senha();
+		}
 	}
 }

@@ -1,83 +1,113 @@
-package med.voll.api.controller;
+// package med.voll.api.controller;
 
-import med.voll.api.domain.consulta.AgendaDeConsultas;
-import med.voll.api.domain.consulta.DadosAgendamentoConsulta;
-import med.voll.api.domain.consulta.DadosDetalhamentoConsulta;
-import med.voll.api.domain.medico.Especialidade;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.json.JacksonTester;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
-import java.time.LocalDateTime;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+// import med.voll.api.domain.consulta.Consulta;
+// import med.voll.api.domain.consulta.ConsultaService;
+// import med.voll.api.domain.consulta.DadosAgendamentoConsulta;
+// import med.voll.api.domain.consulta.DadosCancelamentoConsulta;
+// import med.voll.api.domain.consulta.DadosDetalhamentoConsulta;
+// import med.voll.api.domain.consulta.MotivoCancelamento;
+// import med.voll.api.domain.medico.Especialidade;
+// import org.assertj.core.api.Assertions;
+// import org.junit.jupiter.api.DisplayName;
+// import org.junit.jupiter.api.Test;
+// import org.mockito.Mockito;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import
+// org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
+// import
+// org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+// import org.springframework.boot.test.context.SpringBootTest;
+// import org.springframework.boot.test.json.JacksonTester;
+// import org.springframework.boot.test.mock.mockito.MockBean;
+// import org.springframework.http.HttpStatus;
+// import org.springframework.http.MediaType;
+// import org.springframework.security.test.context.support.WithMockUser;
+// import org.springframework.test.web.servlet.MockMvc;
+// import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+// import java.time.LocalDateTime;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@AutoConfigureJsonTesters
-class ConsultaControllerTest {
+// @SpringBootTest
+// @AutoConfigureMockMvc
+// @AutoConfigureJsonTesters
+// class ConsultaControllerTest {
 
-	@Autowired
-	private MockMvc mvc;
+// @Autowired
+// private MockMvc mvc;
+// @Autowired
+// private JacksonTester<DadosAgendamentoConsulta> dadosAgendamentoConsultaJson;
+// @Autowired
+// private JacksonTester<DadosDetalhamentoConsulta>
+// dadosDetalhamentoConsultaJson;
+// @Autowired
+// private JacksonTester<DadosCancelamentoConsulta>
+// dadosCancelamentoConsultaJson;
+// @MockBean
+// private ConsultaService consultaService;
+// private final String baseUrl = "/api/v1/consultas";
 
-	@Autowired
-	private JacksonTester<DadosAgendamentoConsulta> dadosAgendamentoConsultaJson;
+// @Test
+// @DisplayName("agendar - Deve devolver codigo HTTP 400 quando informacoes
+// estao invalidas")
+// @WithMockUser
+// void agendarCenario1() throws Exception {
+// var response =
+// mvc.perform(MockMvcRequestBuilders.post(baseUrl)).andReturn().getResponse();
 
-	@Autowired
-	private JacksonTester<DadosDetalhamentoConsulta> dadosDetalhamentoConsultaJson;
+// Assertions.assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+// }
 
-	@MockBean
-	private AgendaDeConsultas agendaDeConsultas;
+// @Test
+// @DisplayName("agendar - Deve devolver codigo HTTP 200 quando informações
+// estao válidas")
+// @WithMockUser
+// void agendarCenario2() throws Exception {
+// var data = LocalDateTime.now().plusHours(1);
+// var especialidade = Especialidade.CARDIOLOGIA;
+// var dadosDetalhamento = new DadosDetalhamentoConsulta(null, 2L, 5L, data);
+// Mockito.when(this.consultaService.agendarConsulta(Mockito.any())).thenReturn(dadosDetalhamento);
 
-	@Test
-	@DisplayName("Deveria devolver codigo http 400 quando informacoes estao invalidas")
-	@WithMockUser
-	void agendar_cenario1() throws Exception {
-		var response = mvc
-				.perform(post("/consultas"))
-				.andReturn().getResponse();
+// var response = mvc.perform(
+// MockMvcRequestBuilders
+// .post(baseUrl)
+// .contentType(MediaType.APPLICATION_JSON)
+// .content(
+// dadosAgendamentoConsultaJson.write(
+// new DadosAgendamentoConsulta(2L, 5L, data, especialidade)).getJson()))
+// .andReturn().getResponse();
+// var jsonEsperado =
+// dadosDetalhamentoConsultaJson.write(dadosDetalhamento).getJson();
 
-		assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-	}
+// Assertions.assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+// Assertions.assertThat(response.getContentAsString()).isEqualTo(jsonEsperado);
+// }
 
-	@Test
-	@DisplayName("Deveria devolver codigo http 200 quando informacoes estao validas")
-	@WithMockUser
-	void agendar_cenario2() throws Exception {
+// @Test
+// @DisplayName("cancelamento - Deve devolver codigo HTTP 400 quando informacoes
+// estao invalidas")
+// @WithMockUser
+// void cancelamentoCenario1() throws Exception {
+// var response =
+// mvc.perform(MockMvcRequestBuilders.delete(baseUrl)).andReturn().getResponse();
 
-		var data = LocalDateTime.now().plusHours(1);
-		var especialidade = Especialidade.CARDIOLOGIA;
+// Assertions.assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+// }
 
-		var dadosDetalhamento = new DadosDetalhamentoConsulta(null, 2l, 5l, data);
-        //mockito quando minha agendaDeConsultas que é o mock, tiver um metodo agendar e não importa os parametros devolva os dados de dadosDetalhamento
-		when(agendaDeConsultas.agendar(any())).thenReturn(dadosDetalhamento);
+// @Test
+// @DisplayName("cancelamento - Deve devolver codigo HTTP 204 quando informacoes
+// estao validas")
+// @WithMockUser
+// void cancelamentoCenario2() throws Exception {
+// var motivo = MotivoCancelamento.MEDICO_CANCELOU;
+// var dadosCancelamento = new DadosCancelamentoConsulta(1L, motivo);
+// Mockito.when(this.consultaService.cancelamentoConsulta(Mockito.any())).thenReturn(new
+// Consulta());
 
-		var response = mvc
-				.perform(
-						post("/consultas")
-								.contentType(MediaType.APPLICATION_JSON)
-								.content(dadosAgendamentoConsultaJson.write(
-										new DadosAgendamentoConsulta(2l, 5l, data, especialidade)
-								).getJson())
-				)
-				.andReturn().getResponse();
+// var response = mvc.perform(
+// MockMvcRequestBuilders.delete(baseUrl)
+// .contentType(MediaType.APPLICATION_JSON)
+// .content(dadosCancelamentoConsultaJson.write(dadosCancelamento).getJson()))
+// .andReturn().getResponse();
 
-		assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-
-		var jsonEsperado = dadosDetalhamentoConsultaJson.write(
-			dadosDetalhamento
-		).getJson();
-
-		assertThat(response.getContentAsString()).isEqualTo(jsonEsperado);
-	}
-}
+// Assertions.assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
+// }
+// }

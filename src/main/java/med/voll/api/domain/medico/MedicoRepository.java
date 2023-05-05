@@ -36,4 +36,10 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
 		m.id = :id
 		""")
 	Boolean findAtivoById(Long id);
+
+	@Query("SELECT COUNT(m) > 0 FROM Medico m WHERE m.crm = :crm")
+	Boolean existisByCrm(String crm);
+
+	@Query("SELECT COUNT(m) > 0 FROM Medico m WHERE m.email = :email")
+	Boolean existisByEmail(String email);
 }
