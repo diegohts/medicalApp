@@ -1,6 +1,5 @@
 package med.voll.api.domain.consulta;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -8,7 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.paciente.Paciente;
-
+import jakarta.validation.constraints.Future;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 
 @Table(name = "consultas")
@@ -31,6 +31,8 @@ public class Consulta {
 	@JoinColumn(name = "paciente_id")
 	private Paciente paciente;
 
+	@Future
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime data;
 
 	@Column(name = "motivo_cancelamento")
