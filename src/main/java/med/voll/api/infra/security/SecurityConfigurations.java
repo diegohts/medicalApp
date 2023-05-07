@@ -1,6 +1,7 @@
 package med.voll.api.infra.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -25,8 +26,8 @@ public class SecurityConfigurations {
 
 	private final SecurityFilter securityFilter;
 
-	// @Value("${app.web.url}")
-	// private String appWebUrl;
+	@Value("${app.web.url}")
+	private String appWebUrl;
 
 	@Autowired
 	public SecurityConfigurations(SecurityFilter securityFilter) {
@@ -60,8 +61,7 @@ public class SecurityConfigurations {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		// configuration.setAllowedOrigins(Arrays.asList(appWebUrl));
-		configuration.setAllowedOrigins(Arrays.asList("*"));
+		configuration.setAllowedOrigins(Arrays.asList(appWebUrl));
 		configuration.setAllowedMethods(
 				Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT"));
 		configuration.setAllowedHeaders(Arrays.asList("*"));
