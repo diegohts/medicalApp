@@ -61,6 +61,7 @@ public class SecurityConfigurations {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		// configuration.setAllowedOrigins(Arrays.asList(appWebUrl));
+		configuration.setAllowedOrigins(Arrays.asList("*"));
 		configuration.setAllowedMethods(
 				Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT"));
 		configuration.setAllowedHeaders(Arrays.asList("*"));
