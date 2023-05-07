@@ -1,0 +1,5 @@
+name: MedicalApp
+deployment:
+  production:
+    commands:
+      - cp src/main/resources/application-secret.properties /app/
