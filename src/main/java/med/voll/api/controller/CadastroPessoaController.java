@@ -26,9 +26,7 @@ public class CadastroPessoaController {
 	@PostMapping
 	public ResponseEntity<DadosDetalhamentoPessoa> cadastrarPessoa(@RequestBody @Valid DadosCadastroPessoa dadosCadastroPessoa, UriComponentsBuilder uriComponentsBuilder){
 		var dadosDetalhamentoPessoa = pessoaService.cadastrar(dadosCadastroPessoa);
-		var uri = uriComponentsBuilder.scheme("https") // Aqui estamos definindo que a URI gerada deve usar HTTPS
-				.host("medicalapp.up.railway.app")
-				.path("/pessoas/{id}")
+		var uri = uriComponentsBuilder.path("/pessoas/{id}")
 				.buildAndExpand(dadosDetalhamentoPessoa.id())
 				.toUri();
 
