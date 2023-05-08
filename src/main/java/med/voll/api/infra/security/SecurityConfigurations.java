@@ -26,8 +26,8 @@ public class SecurityConfigurations {
 
 	private final SecurityFilter securityFilter;
 
-	@Value("${app.web.url}")
-	private String appWebUrl;
+	// @Value("${app.web.url}")
+	// private String appWebUrl;
 
 	@Autowired
 	public SecurityConfigurations(SecurityFilter securityFilter) {
@@ -36,14 +36,27 @@ public class SecurityConfigurations {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http.csrf().disable()
-				.cors(Customizer.withDefaults())
+		return http
+				.cors()
+					.configurationSource(corsConfigurationSource())
+					.and()
+				.csrf().disable()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and().authorizeHttpRequests()
-				.requestMatchers(HttpMethod.POST, "/user/login", "/user/signup").permitAll()
-				.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
-				.anyRequest().authenticated()
-				.and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+				.and()
+				.authorizeRequests()
+					.requestMatchers(request ->
+							request.getMethod().equals(HttpMethod.POST.name()) &&
+							(request.getServletPath().equals("/user/login") ||
+							request.getServletPath().equals("/user/signup"))
+					).permitAll()
+					.requestMatchers(request ->
+							request.getServletPath().startsWith("/v3/api-docs") ||
+							request.getServletPath().equals("/swagger-ui.html") ||
+							request.getServletPath().startsWith("/swagger-ui/")
+					).permitAll()
+					.anyRequest().authenticated()
+				.and()
+				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
 	}
 
@@ -61,7 +74,8 @@ public class SecurityConfigurations {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList(appWebUrl));
+		// configuration.setAllowedOrigins(Arrays.asList(appWebUrl));
+		configuration.setAllowedOrigins(Arrays.asList("*")); // permitir todos os domínios
 		configuration.setAllowedMethods(
 				Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT"));
 		configuration.setAllowedHeaders(Arrays.asList("*"));
