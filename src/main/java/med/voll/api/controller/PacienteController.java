@@ -11,14 +11,22 @@ import org.springframework.web.util.UriComponentsBuilder;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import med.voll.api.domain.paciente.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @RestController
 @RequestMapping("/api/v1/pacientes")
 @SecurityRequirement(name = "bearer-key")
 public class PacienteController {
 
+	private static final Logger logger = LogManager.getLogger(PacienteController.class);
+
+	private final PacienteRepository repository;
+
 	@Autowired
-	private PacienteRepository repository;
+	public PacienteController(PacienteRepository repository) {
+		this.repository = repository;
+	}
 
 	@PostMapping
 	@Transactional
@@ -27,6 +35,9 @@ public class PacienteController {
 		repository.save(paciente);
 
 		var uri = uriBuilder.path("/pacientes/{id}").buildAndExpand(paciente.getId()).toUri();
+
+		logger.info("O paciente " + paciente.getNome() + " foi cadastrado com sucesso no sistema");
+
 		return ResponseEntity.created(uri).body(new DadosDetalhamentoPaciente(paciente));
 	}
 
@@ -43,6 +54,8 @@ public class PacienteController {
 		var paciente = repository.getReferenceById(dados.id());
 		paciente.atualizarInformacoes(dados);
 
+		logger.info("O paciente " + paciente.getNome() + " foi atualizado com sucesso no sistema");
+
 		return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
 	}
 
@@ -51,6 +64,8 @@ public class PacienteController {
 	public ResponseEntity excluir(@PathVariable Long id) {
 		var paciente = repository.getReferenceById(id);
 		paciente.excluir();
+
+		logger.info("O paciente " + paciente.getNome() + " foi inativado com sucesso no sistema");
 
 		return ResponseEntity.noContent().build();
 	}

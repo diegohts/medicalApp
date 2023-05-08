@@ -9,16 +9,19 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import med.voll.api.domain.medico.*;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.Objects;
 import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @RestController
 @RequestMapping("/api/v1/medicos")
 @SecurityRequirement(name = "bearer-key")
 public class MedicoController {
+
+	private static final Logger logger = LogManager.getLogger(MedicoController.class);
 
 	private final MedicoService medicoService;
 
@@ -33,6 +36,8 @@ public class MedicoController {
 		DadosDetalhamentoMedico medico = this.medicoService.cadastrar(dados);
 
 		URI uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.id()).toUri();
+
+		logger.info("O medico " + medico.nome() + " foi cadastrado com sucesso no sistema");
 
 		return ResponseEntity.created(uri).body(medico);
 	}
@@ -49,12 +54,16 @@ public class MedicoController {
 	public ResponseEntity<DadosDetalhamentoMedico> atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados) {
 		DadosDetalhamentoMedico medico = this.medicoService.atualizarInformacoes(dados);
 
+		logger.info("O medico " + medico.nome() + " foi atualizado com sucesso no sistema");
+
 		return ResponseEntity.ok(medico);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> excluir(@PathVariable Long id) {
 		this.medicoService.excluir(id);
+
+		logger.info("O medico de ID " + id + " foi inativado com sucesso no sistema");
 
 		return ResponseEntity.noContent().build();
 	}
