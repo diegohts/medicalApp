@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("https://medicalapp.up.railway.app/api/v1/consultas")
+@RequestMapping("/api/v1/consultas")
 @SecurityRequirement(name = "bearer-key")
 public class ConsultaController {
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("https://medicalapp.up.railway.app/user/signup")
+@RequestMapping("/user/signup")
 public class CadastroPessoaController {
 
 	private final PessoaService pessoaService;
@@ -26,7 +26,9 @@ public class CadastroPessoaController {
 	@PostMapping
 	public ResponseEntity<DadosDetalhamentoPessoa> cadastrarPessoa(@RequestBody @Valid DadosCadastroPessoa dadosCadastroPessoa, UriComponentsBuilder uriComponentsBuilder){
 		var dadosDetalhamentoPessoa = pessoaService.cadastrar(dadosCadastroPessoa);
-		var uri = uriComponentsBuilder.path("/pessoas/{id}")
+		var uri = uriComponentsBuilder.scheme("https") // Aqui estamos definindo que a URI gerada deve usar HTTPS
+				.host("medicalapp.up.railway.app")
+				.path("/pessoas/{id}")
 				.buildAndExpand(dadosDetalhamentoPessoa.id())
 				.toUri();
 

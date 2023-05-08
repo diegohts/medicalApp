@@ -13,7 +13,7 @@ import jakarta.validation.Valid;
 import med.voll.api.domain.paciente.*;
 
 @RestController
-@RequestMapping("https://medicalapp.up.railway.app/api/v1/pacientes")
+@RequestMapping("/api/v1/pacientes")
 @SecurityRequirement(name = "bearer-key")
 public class PacienteController {
 
