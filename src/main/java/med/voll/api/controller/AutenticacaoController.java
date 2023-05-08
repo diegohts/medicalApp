@@ -36,7 +36,7 @@ public class AutenticacaoController {
 
 		String tokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
 
-		logger.info("Autenticação realizada: " + dados.login());
+		logger.info("O login " + dados.login() + " foi realizado");
 		return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
 	}
 }

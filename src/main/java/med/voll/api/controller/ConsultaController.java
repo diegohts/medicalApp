@@ -31,7 +31,7 @@ public class ConsultaController {
 			@RequestBody @Valid DadosAgendamentoConsulta dadosAgendamentoConsulta) {
 		var dto = consultaService.agendarConsulta(dadosAgendamentoConsulta);
 
-		logger.info("A consulta nº " + dto.id() + " foi agendada com sucesso");
+		logger.info("A consulta de numero " + dto.id() + " foi agendada com sucesso");
 
 		return ResponseEntity.ok(dto);
 	}
@@ -40,7 +40,7 @@ public class ConsultaController {
 	public ResponseEntity<Void> cancelar(@RequestBody @Valid DadosCancelamentoConsulta dadosCancelamentoConsulta) {
 		consultaService.cancelamentoConsulta(dadosCancelamentoConsulta);
 
-		logger.info("A consulta nº " + dadosCancelamentoConsulta.idConsulta() + " foi cancelada com sucesso");
+		logger.info("A consulta de numero " + dadosCancelamentoConsulta.idConsulta() + " foi cancelada com sucesso");
 
 		return ResponseEntity.noContent().build();
 	}

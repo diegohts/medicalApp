@@ -34,7 +34,7 @@ public class PessoaController {
 	public ResponseEntity<DadosDetalhamentoPessoa> detalhar(@PathVariable String login){
 		DadosDetalhamentoPessoa dados = pessoaService.detalhar(login);
 
-		logger.info("O usuário" + dados.nome() + " realizou o login com sucesso no sistema");
+		logger.info("O usuario" + dados.nome() + " realizou o login com sucesso no sistema");
 
 		return ResponseEntity.ok(dados);
 	}
@@ -43,7 +43,7 @@ public class PessoaController {
 	public ResponseEntity<DadosDetalhamentoPessoa> atualizar(@RequestBody @Valid DadosAtualizacaoPessoa dadosAtualizacaoPessoa){
 		DadosDetalhamentoPessoa dados = pessoaService.atualizar(dadosAtualizacaoPessoa);
 
-		logger.info("O usuário" + dados.nome() + " atualizou seus dados no sistema");
+		logger.info("O usuario" + dados.nome() + " atualizou seus dados no sistema");
 
 		return ResponseEntity.ok(dados);
 	}
