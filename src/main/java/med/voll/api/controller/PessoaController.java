@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/v1/pessoas")
+@RequestMapping("https://medicalapp.up.railway.app/api/v1/pessoas")
 @SecurityRequirement(name = "bearer-key")
 public class PessoaController {
 	private final PessoaService pessoaService;

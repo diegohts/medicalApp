@@ -16,7 +16,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/v1/medicos")
+@RequestMapping("https://medicalapp.up.railway.app/api/v1/medicos")
 @SecurityRequirement(name = "bearer-key")
 public class MedicoController {
 

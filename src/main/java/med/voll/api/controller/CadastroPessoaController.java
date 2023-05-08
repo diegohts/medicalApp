@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/user/signup")
+@RequestMapping("https://medicalapp.up.railway.app/user/signup")
 public class CadastroPessoaController {
 
 	private final PessoaService pessoaService;

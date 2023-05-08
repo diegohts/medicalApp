@@ -13,7 +13,7 @@ import med.voll.api.infra.security.DadosTokenJWT;
 import med.voll.api.infra.security.TokenService;
 
 @RestController
-@RequestMapping("/user/login")
+@RequestMapping("https://medicalapp.up.railway.app/user/login")
 public class AutenticacaoController {
 
 	private final AuthenticationManager authenticationManager;

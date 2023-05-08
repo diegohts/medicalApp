@@ -6,13 +6,12 @@ import med.voll.api.domain.consulta.ConsultaService;
 import med.voll.api.domain.consulta.DadosAgendamentoConsulta;
 import med.voll.api.domain.consulta.DadosCancelamentoConsulta;
 import med.voll.api.domain.consulta.DadosDetalhamentoConsulta;
-import med.voll.api.domain.consulta.ConsultaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/consultas")
+@RequestMapping("https://medicalapp.up.railway.app/api/v1/consultas")
 @SecurityRequirement(name = "bearer-key")
 public class ConsultaController {
 
